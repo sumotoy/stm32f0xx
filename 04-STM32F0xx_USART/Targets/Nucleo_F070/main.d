@@ -31,3 +31,4 @@
 .\targets\nucleo_f070\main.o: ..\00-STM32F0xx_STANDARD_PERIPHERAL_DRIVERS\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_wwdg.h
 .\targets\nucleo_f070\main.o: ..\00-STM32F0xx_STANDARD_PERIPHERAL_DRIVERS\STM32F0xx_StdPeriph_Driver\inc\stm32f0xx_misc.h
 .\targets\nucleo_f070\main.o: User\defines.h
+.\targets\nucleo_f070\main.o: ..\00-STM32F0xx_LIBRARIES\tm_stm32f0_usart.h

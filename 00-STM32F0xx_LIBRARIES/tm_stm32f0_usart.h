@@ -122,6 +122,47 @@ extern C {
 	#error "Device not recognized!"
 #endif
 
+/* Default buffer sizes */
+#ifndef TM_USART_BUFFER_SIZE
+#define TM_USART_BUFFER_SIZE    32
+#endif
+
+/* Buffer size for each USART */
+#ifndef TM_USART1_BUFFER_SIZE
+#define TM_USART1_BUFFER_SIZE   TM_USART_BUFFER_SIZE
+#endif
+#ifndef TM_USART2_BUFFER_SIZE
+#define TM_USART2_BUFFER_SIZE   TM_USART_BUFFER_SIZE
+#endif
+#ifndef TM_USART3_BUFFER_SIZE
+#define TM_USART3_BUFFER_SIZE   TM_USART_BUFFER_SIZE
+#endif
+#ifndef TM_USART4_BUFFER_SIZE
+#define TM_USART4_BUFFER_SIZE   TM_USART_BUFFER_SIZE
+#endif
+#ifndef TM_USART5_BUFFER_SIZE
+#define TM_USART5_BUFFER_SIZE   TM_USART_BUFFER_SIZE
+#endif
+#ifndef TM_USART6_BUFFER_SIZE
+#define TM_USART6_BUFFER_SIZE   TM_USART_BUFFER_SIZE
+#endif
+#ifndef TM_USART7_BUFFER_SIZE
+#define TM_USART7_BUFFER_SIZE   TM_USART_BUFFER_SIZE
+#endif
+#ifndef TM_USART8_BUFFER_SIZE
+#define TM_USART8_BUFFER_SIZE   TM_USART_BUFFER_SIZE
+#endif
+
+/**
+ * @brief  Wait till USART finishes transmission
+ */
+#define USART_WAIT(USARTx)      while (!((USARTx)->ISR & USART_ISR_TXE))
+	
+/**
+ * @brief  Default string delimiter for USART
+ */
+#define USART_STRING_DELIMITER  '\n'
+
 /**
  * @}
  */

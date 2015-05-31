@@ -18,18 +18,78 @@
  */
 #include "tm_stm32f0_usart.h"
 
+/* Private structure */
 typedef struct {
 	uint8_t* Buffer;
+	uint16_t Size;
+	uint16_t In;
+	uint16_t Out;
+	uint16_t Num;
+	uint8_t Initialized;
+	uint8_t StringDelimiter;
 } TM_USART_t;
 
-TM_USART_t TM_USART1;
-TM_USART_t TM_USART2;
-TM_USART_t TM_USART3;
-TM_USART_t TM_USART4;
-TM_USART_t TM_USART5;
-TM_USART_t TM_USART6;
-TM_USART_t TM_USART7;
-TM_USART_t TM_USART8;
+/* Private buffers for USARTs */
+#ifdef USART1_IRQHANDLER
+uint8_t TM_USART1_Buffer[TM_USART1_BUFFER_SIZE];
+#endif
+#ifdef USART2_IRQHANDLER
+uint8_t TM_USART2_Buffer[TM_USART2_BUFFER_SIZE];
+#endif
+#ifdef USART3_IRQHANDLER
+uint8_t TM_USART3_Buffer[TM_USART3_BUFFER_SIZE];
+#endif
+#ifdef USART4_IRQHANDLER
+uint8_t TM_USART4_Buffer[TM_USART4_BUFFER_SIZE];
+#endif
+#ifdef USART5_IRQHANDLER
+uint8_t TM_USART5_Buffer[TM_USART5_BUFFER_SIZE];
+#endif
+#ifdef USART6_IRQHANDLER
+uint8_t TM_USART6_Buffer[TM_USART6_BUFFER_SIZE];
+#endif
+#ifdef USART7_IRQHANDLER
+uint8_t TM_USART7_Buffer[TM_USART7_BUFFER_SIZE];
+#endif
+#ifdef USART8_IRQHANDLER
+uint8_t TM_USART8_Buffer[TM_USART8_BUFFER_SIZE];
+#endif
+
+/* Private structure */
+#ifdef USART1_IRQHANDLER
+TM_USART_t TM_USART1 = {TM_USART1_Buffer, TM_USART1_BUFFER_SIZE, 0, 0, 0, 0, USART_STRING_DELIMITER};
+#endif
+#ifdef USART2_IRQHANDLER
+TM_USART_t TM_USART2 = {TM_USART2_Buffer, TM_USART2_BUFFER_SIZE, 0, 0, 0, 0, USART_STRING_DELIMITER};
+#endif
+#ifdef USART3_IRQHANDLER
+TM_USART_t TM_USART3 = {TM_USART3_Buffer, TM_USART3_BUFFER_SIZE, 0, 0, 0, 0, USART_STRING_DELIMITER};
+#endif
+#ifdef USART4_IRQHANDLER
+TM_USART_t TM_USART4 = {TM_USART4_Buffer, TM_USART4_BUFFER_SIZE, 0, 0, 0, 0, USART_STRING_DELIMITER};
+#endif
+#ifdef USART5_IRQHANDLER
+TM_USART_t TM_USART5 = {TM_USART5_Buffer, TM_USART5_BUFFER_SIZE, 0, 0, 0, 0, USART_STRING_DELIMITER};
+#endif
+#ifdef USART6_IRQHANDLER
+TM_USART_t TM_USART6 = {TM_USART6_Buffer, TM_USART6_BUFFER_SIZE, 0, 0, 0, 0, USART_STRING_DELIMITER};
+#endif
+#ifdef USART7_IRQHANDLER
+TM_USART_t TM_USART7 = {TM_USART7_Buffer, TM_USART7_BUFFER_SIZE, 0, 0, 0, 0, USART_STRING_DELIMITER};
+#endif
+#ifdef USART8_IRQHANDLER
+TM_USART_t TM_USART8 = {TM_USART8_Buffer, TM_USART8_BUFFER_SIZE, 0, 0, 0, 0, USART_STRING_DELIMITER};
+#endif
+
+/* Private function declarations */
+void TM_INT_USART1_InitPins(TM_USART_PinsPack_t PinsPack);
+void TM_INT_USART2_InitPins(TM_USART_PinsPack_t PinsPack);
+void TM_INT_USART3_InitPins(TM_USART_PinsPack_t PinsPack);
+void TM_INT_USART4_InitPins(TM_USART_PinsPack_t PinsPack);
+void TM_INT_USART5_InitPins(TM_USART_PinsPack_t PinsPack);
+void TM_INT_USART6_InitPins(TM_USART_PinsPack_t PinsPack);
+void TM_INT_USART7_InitPins(TM_USART_PinsPack_t PinsPack);
+void TM_INT_USART8_InitPins(TM_USART_PinsPack_t PinsPack);
 
 void TM_USART_Init(USART_TypeDef* USARTx, TM_USART_PinsPack_t PinsPack, uint32_t baudrate) {
 	USART_InitTypeDef USART_InitStruct;
@@ -42,7 +102,7 @@ void TM_USART_Init(USART_TypeDef* USARTx, TM_USART_PinsPack_t PinsPack, uint32_t
 		RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 		
 		/* Init USART1 pins */
-		TM_INT_USART1_InitPins(PinsPack)
+		TM_INT_USART1_InitPins(PinsPack);
 		
 		/* Select NVIC interrupt source */
 		NVIC_InitStruct.NVIC_IRQChannel = USART1_IRQ;
@@ -55,11 +115,11 @@ void TM_USART_Putc(USART_TypeDef* USARTx, char c) {
 	/* Check if USART enabled */
 	if (USARTx->CR1 & USART_CR1_UE) {
 		/* Wait for USART to end */
-		while (!(USARTx->ISR & USART_ISR_TXE));
+		USART_WAIT(USARTx);
 		/* Set data to transmit register */
 		USARTx->TDR = c;
 		/* Wait for USART to end */
-		while (!(USARTx->ISR & USART_ISR_TXE));
+		USART_WAIT(USARTx);
 	}
 }
 
@@ -110,7 +170,7 @@ void USART4_IRQHANDLER(void) {
 	/* Check for USART3 */
 	if (USART3->ISR & USART_ISR_RXNE) {
 		TM_USART_INT_AddToBuffer(&TM_USART3, USART3->RDR);
-	}	
+	}
 #endif	
 #ifdef USART4_IRQHANDLER
 	/* Check for USART4 */
@@ -145,4 +205,36 @@ void USART4_IRQHANDLER(void) {
 	
 }
 #endif
+
+void TM_INT_USART1_InitPins(TM_USART_PinsPack_t PinsPack) {
+
+}
+
+void TM_INT_USART2_InitPins(TM_USART_PinsPack_t PinsPack) {
+
+}
+
+void TM_INT_USART3_InitPins(TM_USART_PinsPack_t PinsPack) {
+
+}
+
+void TM_INT_USART4_InitPins(TM_USART_PinsPack_t PinsPack) {
+
+}
+
+void TM_INT_USART5_InitPins(TM_USART_PinsPack_t PinsPack) {
+
+}
+
+void TM_INT_USART6_InitPins(TM_USART_PinsPack_t PinsPack) {
+
+}
+
+void TM_INT_USART7_InitPins(TM_USART_PinsPack_t PinsPack) {
+
+}
+
+void TM_INT_USART8_InitPins(TM_USART_PinsPack_t PinsPack) {
+
+}
 

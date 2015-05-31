@@ -432,12 +432,12 @@ ARM Macro Assembler    Page 7
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0 --apcs=interw
 ork --depend=.\targets\nucleo_f091\startup_stm32f091.d -o.\targets\nucleo_f091\
-startup_stm32f091.o -I"C:\Users\tilz0R\Google Drive\JAVNO\ELEKTRONIKA\ARM\STM32
-F429\majerle.eu_F0\04-STM32F0xx_USART\RTE" -IC:\Keil_v5\ARM\PACK\Keil\STM32F0xx
-_DFP\1.4.0\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__MICROLI
-B SETA 1" --predefine="__UVISION_VERSION SETA 514" --predefine="STM32F091 SETA 
-1" --list=.\startup_stm32f091.lst ..\00-STM32F0xx_STANDARD_PERIPHERAL_DRIVERS\C
-MSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f091.s
+startup_stm32f091.o -I"C:\Users\tilz0R\Google Drive\Electronics\ARM\stm32f4-dis
+covery.com_F0\04-STM32F0xx_USART\RTE" -IC:\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\
+1.4.0\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__MICROLIB SET
+A 1" --predefine="__UVISION_VERSION SETA 514" --predefine="STM32F091 SETA 1" --
+list=.\startup_stm32f091.lst ..\00-STM32F0xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\
+Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f091.s
 
 
 

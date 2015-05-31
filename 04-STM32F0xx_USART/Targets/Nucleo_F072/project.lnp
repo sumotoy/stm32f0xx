@@ -1,5 +1,5 @@
 --cpu Cortex-M0
-".\targets\nucleo_f072\startup_stm32f072.o"
+".\targets\nucleo_f072\startup_stm32f030.o"
 ".\targets\nucleo_f072\stm32f0xx_misc.o"
 ".\targets\nucleo_f072\stm32f0xx_gpio.o"
 ".\targets\nucleo_f072\stm32f0xx_rcc.o"
