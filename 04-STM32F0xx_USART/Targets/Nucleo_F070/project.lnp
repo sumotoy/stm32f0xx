@@ -1,0 +1,15 @@
+--cpu Cortex-M0
+".\targets\nucleo_f070\startup_stm32f072.o"
+".\targets\nucleo_f070\stm32f0xx_misc.o"
+".\targets\nucleo_f070\stm32f0xx_gpio.o"
+".\targets\nucleo_f070\stm32f0xx_rcc.o"
+".\targets\nucleo_f070\tm_stm32f0_delay.o"
+".\targets\nucleo_f070\tm_stm32f0_disco.o"
+".\targets\nucleo_f070\tm_stm32f0_gpio.o"
+".\targets\nucleo_f070\main.o"
+".\targets\nucleo_f070\stm32f0xx_it.o"
+".\targets\nucleo_f070\system_stm32f0xx.o"
+--library_type=microlib --strict --scatter ".\Targets\Nucleo_F070\project.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\project.map" -o .\Targets\Nucleo_F070\project.axf

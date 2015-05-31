@@ -1,0 +1,16 @@
+--cpu Cortex-M0
+".\targets\stm32f072_discovery\startup_stm32f072.o"
+".\targets\stm32f072_discovery\stm32f0xx_misc.o"
+".\targets\stm32f072_discovery\stm32f0xx_gpio.o"
+".\targets\stm32f072_discovery\stm32f0xx_rcc.o"
+".\targets\stm32f072_discovery\tm_stm32f0_delay.o"
+".\targets\stm32f072_discovery\tm_stm32f0_disco.o"
+".\targets\stm32f072_discovery\tm_stm32f0_gpio.o"
+".\targets\stm32f072_discovery\tm_stm32f0_exti.o"
+".\targets\stm32f072_discovery\main.o"
+".\targets\stm32f072_discovery\stm32f0xx_it.o"
+".\targets\stm32f072_discovery\system_stm32f0xx.o"
+--library_type=microlib --strict --scatter ".\Targets\STM32F072_Discovery\project.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\project.map" -o .\Targets\STM32F072_Discovery\project.axf
